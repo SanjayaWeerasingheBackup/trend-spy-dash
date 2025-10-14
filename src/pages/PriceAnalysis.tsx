@@ -17,37 +17,73 @@ const PriceAnalysis = () => {
 
   const filteredData = filterData(mockData, filters);
 
-  // Price vs Clothing Type
-  const priceByType = filteredData.map((item, index) => ({
-    type: item.clothingType,
+  // Create category mappings for X-axis
+  const typeMapping = { 'men': 0, 'women': 1 };
+  const subtypeMapping = { 'shirt': 0, 'tshirt': 1, 'skirt': 2, 'jean': 3, 'trouser': 4, 'saree': 5, 'frock': 6 };
+
+  // Price vs Clothing Type - each item gets its own dot
+  const priceByType = filteredData.map((item) => ({
+    typeValue: typeMapping[item.clothingType],
+    typeName: item.clothingType,
     price: item.price,
-    id: index,
+    name: item.name,
   }));
 
-  // Price vs Clothing Subtype
-  const priceBySubtype = filteredData.map((item, index) => ({
-    subtype: item.clothingSubtype,
+  // Price vs Clothing Subtype - each item gets its own dot
+  const priceBySubtype = filteredData.map((item) => ({
+    subtypeValue: subtypeMapping[item.clothingSubtype],
+    subtypeName: item.clothingSubtype,
     price: item.price,
-    id: index,
+    name: item.name,
   }));
 
   // Price vs Competitor Clothing Type
   const fashionbugTypeData = filteredData
     .filter(item => item.competitor === "fashionbug")
-    .map((item, index) => ({ type: item.clothingType, price: item.price, id: index }));
+    .map((item) => ({ 
+      typeValue: typeMapping[item.clothingType],
+      typeName: item.clothingType,
+      price: item.price,
+      name: item.name,
+    }));
   
   const coolplanetTypeData = filteredData
     .filter(item => item.competitor === "coolplanet")
-    .map((item, index) => ({ type: item.clothingType, price: item.price, id: index }));
+    .map((item) => ({ 
+      typeValue: typeMapping[item.clothingType],
+      typeName: item.clothingType,
+      price: item.price,
+      name: item.name,
+    }));
 
   // Price vs Competitor Clothing Subtype
   const fashionbugSubtypeData = filteredData
     .filter(item => item.competitor === "fashionbug")
-    .map((item, index) => ({ subtype: item.clothingSubtype, price: item.price, id: index }));
+    .map((item) => ({ 
+      subtypeValue: subtypeMapping[item.clothingSubtype],
+      subtypeName: item.clothingSubtype,
+      price: item.price,
+      name: item.name,
+    }));
   
   const coolplanetSubtypeData = filteredData
     .filter(item => item.competitor === "coolplanet")
-    .map((item, index) => ({ subtype: item.clothingSubtype, price: item.price, id: index }));
+    .map((item) => ({ 
+      subtypeValue: subtypeMapping[item.clothingSubtype],
+      subtypeName: item.clothingSubtype,
+      price: item.price,
+      name: item.name,
+    }));
+
+  // Custom tick formatter
+  const typeTickFormatter = (value: number) => {
+    return value === 0 ? 'Men' : 'Women';
+  };
+
+  const subtypeTickFormatter = (value: number) => {
+    const subtypes = ['Shirt', 'T-Shirt', 'Skirt', 'Jean', 'Trouser', 'Saree', 'Frock'];
+    return subtypes[value] || '';
+  };
 
   return (
     <div className="min-h-screen py-8">
@@ -68,9 +104,23 @@ const PriceAnalysis = () => {
             <ResponsiveContainer width="100%" height={400}>
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                <XAxis dataKey="type" name="Type" className="text-sm" />
+                <XAxis 
+                  dataKey="typeValue" 
+                  name="Type" 
+                  className="text-sm"
+                  tickFormatter={typeTickFormatter}
+                  domain={[0, 1]}
+                  ticks={[0, 1]}
+                />
                 <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip 
+                  cursor={{ strokeDasharray: '3 3' }}
+                  formatter={(value: any, name: string) => {
+                    if (name === "Price (LKR)") return [`LKR ${value}`, name];
+                    return [value, name];
+                  }}
+                  labelFormatter={(value: any) => typeTickFormatter(value)}
+                />
                 <Legend />
                 <Scatter name="All Products" data={priceByType} fill="hsl(var(--primary))" />
               </ScatterChart>
@@ -81,11 +131,28 @@ const PriceAnalysis = () => {
           <div className="bg-card rounded-xl border border-border shadow-md p-6">
             <h3 className="text-xl font-semibold mb-6">Price vs Clothing Subtype</h3>
             <ResponsiveContainer width="100%" height={400}>
-              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                <XAxis dataKey="subtype" name="Subtype" className="text-sm" />
+                <XAxis 
+                  dataKey="subtypeValue" 
+                  name="Subtype" 
+                  className="text-sm"
+                  tickFormatter={subtypeTickFormatter}
+                  domain={[0, 6]}
+                  ticks={[0, 1, 2, 3, 4, 5, 6]}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
+                />
                 <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip 
+                  cursor={{ strokeDasharray: '3 3' }}
+                  formatter={(value: any, name: string) => {
+                    if (name === "Price (LKR)") return [`LKR ${value}`, name];
+                    return [value, name];
+                  }}
+                  labelFormatter={(value: any) => subtypeTickFormatter(value)}
+                />
                 <Legend />
                 <Scatter name="All Products" data={priceBySubtype} fill="hsl(var(--accent))" />
               </ScatterChart>
@@ -98,9 +165,23 @@ const PriceAnalysis = () => {
             <ResponsiveContainer width="100%" height={400}>
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                <XAxis dataKey="type" name="Type" className="text-sm" />
+                <XAxis 
+                  dataKey="typeValue" 
+                  name="Type" 
+                  className="text-sm"
+                  tickFormatter={typeTickFormatter}
+                  domain={[0, 1]}
+                  ticks={[0, 1]}
+                />
                 <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip 
+                  cursor={{ strokeDasharray: '3 3' }}
+                  formatter={(value: any, name: string) => {
+                    if (name === "Price (LKR)") return [`LKR ${value}`, name];
+                    return [value, name];
+                  }}
+                  labelFormatter={(value: any) => typeTickFormatter(value)}
+                />
                 <Legend />
                 <Scatter name="FashionBug" data={fashionbugTypeData} fill="hsl(var(--primary))" />
                 <Scatter name="CoolPlanet" data={coolplanetTypeData} fill="hsl(var(--accent))" />
@@ -112,11 +193,28 @@ const PriceAnalysis = () => {
           <div className="bg-card rounded-xl border border-border shadow-md p-6">
             <h3 className="text-xl font-semibold mb-6">Price vs Competitor Clothing Subtype</h3>
             <ResponsiveContainer width="100%" height={400}>
-              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                <XAxis dataKey="subtype" name="Subtype" className="text-sm" />
+                <XAxis 
+                  dataKey="subtypeValue" 
+                  name="Subtype" 
+                  className="text-sm"
+                  tickFormatter={subtypeTickFormatter}
+                  domain={[0, 6]}
+                  ticks={[0, 1, 2, 3, 4, 5, 6]}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
+                />
                 <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip 
+                  cursor={{ strokeDasharray: '3 3' }}
+                  formatter={(value: any, name: string) => {
+                    if (name === "Price (LKR)") return [`LKR ${value}`, name];
+                    return [value, name];
+                  }}
+                  labelFormatter={(value: any) => subtypeTickFormatter(value)}
+                />
                 <Legend />
                 <Scatter name="FashionBug" data={fashionbugSubtypeData} fill="hsl(var(--primary))" />
                 <Scatter name="CoolPlanet" data={coolplanetSubtypeData} fill="hsl(var(--accent))" />
