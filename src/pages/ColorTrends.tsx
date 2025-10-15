@@ -157,29 +157,20 @@ const ColorTrends = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="typeValue" 
+                  type="category"
+                  dataKey="typeName" 
                   name="Type" 
                   className="text-sm"
-                  tickFormatter={typeTickFormatter}
-                  domain={[0, 1]}
-                  ticks={[0, 1]}
+                  allowDuplicatedCategory={false}
                 />
                 <YAxis 
-                  dataKey="colorValue" 
+                  type="category"
+                  dataKey="colorName" 
                   name="Color" 
                   className="text-sm"
-                  tickFormatter={colorTickFormatter}
-                  domain={[0, uniqueColors.length - 1]}
-                  ticks={uniqueColors.map((_, i) => i)}
+                  allowDuplicatedCategory={false}
                 />
-                <Tooltip 
-                  cursor={{ strokeDasharray: '3 3' }}
-                  formatter={(value: any, name: string) => {
-                    if (name === "Color") return [uniqueColors[value as number], name];
-                    return [value, name];
-                  }}
-                  labelFormatter={(value: any) => typeTickFormatter(value)}
-                />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
                 <Scatter name="All Products" data={colorByType} fill="hsl(var(--primary))" />
               </ScatterChart>
@@ -193,32 +184,23 @@ const ColorTrends = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="subtypeValue" 
+                  type="category"
+                  dataKey="subtypeName" 
                   name="Subtype" 
                   className="text-sm"
-                  tickFormatter={subtypeTickFormatter}
-                  domain={[0, 6]}
-                  ticks={[0, 1, 2, 3, 4, 5, 6]}
                   angle={-45}
                   textAnchor="end"
                   height={60}
+                  allowDuplicatedCategory={false}
                 />
                 <YAxis 
-                  dataKey="colorValue" 
+                  type="category"
+                  dataKey="colorName" 
                   name="Color" 
                   className="text-sm"
-                  tickFormatter={colorTickFormatter}
-                  domain={[0, uniqueColors.length - 1]}
-                  ticks={uniqueColors.map((_, i) => i)}
+                  allowDuplicatedCategory={false}
                 />
-                <Tooltip 
-                  cursor={{ strokeDasharray: '3 3' }}
-                  formatter={(value: any, name: string) => {
-                    if (name === "Color") return [uniqueColors[value as number], name];
-                    return [value, name];
-                  }}
-                  labelFormatter={(value: any) => subtypeTickFormatter(value)}
-                />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
                 <Scatter name="All Products" data={colorBySubtype} fill="hsl(var(--accent))" />
               </ScatterChart>
@@ -232,29 +214,20 @@ const ColorTrends = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="typeValue" 
+                  type="category"
+                  dataKey="typeName" 
                   name="Type" 
                   className="text-sm"
-                  tickFormatter={typeTickFormatter}
-                  domain={[0, 1]}
-                  ticks={[0, 1]}
+                  allowDuplicatedCategory={false}
                 />
                 <YAxis 
-                  dataKey="colorValue" 
+                  type="category"
+                  dataKey="colorName" 
                   name="Color" 
                   className="text-sm"
-                  tickFormatter={colorTickFormatter}
-                  domain={[0, uniqueColors.length - 1]}
-                  ticks={uniqueColors.map((_, i) => i)}
+                  allowDuplicatedCategory={false}
                 />
-                <Tooltip 
-                  cursor={{ strokeDasharray: '3 3' }}
-                  formatter={(value: any, name: string) => {
-                    if (name === "Color") return [uniqueColors[value as number], name];
-                    return [value, name];
-                  }}
-                  labelFormatter={(value: any) => typeTickFormatter(value)}
-                />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
                 <Scatter name="FashionBug" data={fashionbugColorType} fill="hsl(var(--primary))" />
                 <Scatter name="CoolPlanet" data={coolplanetColorType} fill="hsl(var(--accent))" />
@@ -269,32 +242,23 @@ const ColorTrends = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="subtypeValue" 
+                  type="category"
+                  dataKey="subtypeName" 
                   name="Subtype" 
                   className="text-sm"
-                  tickFormatter={subtypeTickFormatter}
-                  domain={[0, 6]}
-                  ticks={[0, 1, 2, 3, 4, 5, 6]}
                   angle={-45}
                   textAnchor="end"
                   height={60}
+                  allowDuplicatedCategory={false}
                 />
                 <YAxis 
-                  dataKey="colorValue" 
+                  type="category"
+                  dataKey="colorName" 
                   name="Color" 
                   className="text-sm"
-                  tickFormatter={colorTickFormatter}
-                  domain={[0, uniqueColors.length - 1]}
-                  ticks={uniqueColors.map((_, i) => i)}
+                  allowDuplicatedCategory={false}
                 />
-                <Tooltip 
-                  cursor={{ strokeDasharray: '3 3' }}
-                  formatter={(value: any, name: string) => {
-                    if (name === "Color") return [uniqueColors[value as number], name];
-                    return [value, name];
-                  }}
-                  labelFormatter={(value: any) => subtypeTickFormatter(value)}
-                />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
                 <Scatter name="FashionBug" data={fashionbugColorSubtype} fill="hsl(var(--primary))" />
                 <Scatter name="CoolPlanet" data={coolplanetColorSubtype} fill="hsl(var(--accent))" />

@@ -105,21 +105,19 @@ const PriceAnalysis = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="typeValue" 
+                  type="category"
+                  dataKey="typeName" 
                   name="Type" 
                   className="text-sm"
-                  tickFormatter={typeTickFormatter}
-                  domain={[0, 1]}
-                  ticks={[0, 1]}
+                  allowDuplicatedCategory={false}
                 />
-                <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
+                <YAxis type="number" dataKey="price" name="Price (LKR)" className="text-sm" />
                 <Tooltip 
                   cursor={{ strokeDasharray: '3 3' }}
                   formatter={(value: any, name: string) => {
                     if (name === "Price (LKR)") return [`LKR ${value}`, name];
                     return [value, name];
                   }}
-                  labelFormatter={(value: any) => typeTickFormatter(value)}
                 />
                 <Legend />
                 <Scatter name="All Products" data={priceByType} fill="hsl(var(--primary))" />
@@ -134,24 +132,22 @@ const PriceAnalysis = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="subtypeValue" 
+                  type="category"
+                  dataKey="subtypeName" 
                   name="Subtype" 
                   className="text-sm"
-                  tickFormatter={subtypeTickFormatter}
-                  domain={[0, 6]}
-                  ticks={[0, 1, 2, 3, 4, 5, 6]}
                   angle={-45}
                   textAnchor="end"
                   height={60}
+                  allowDuplicatedCategory={false}
                 />
-                <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
+                <YAxis type="number" dataKey="price" name="Price (LKR)" className="text-sm" />
                 <Tooltip 
                   cursor={{ strokeDasharray: '3 3' }}
                   formatter={(value: any, name: string) => {
                     if (name === "Price (LKR)") return [`LKR ${value}`, name];
                     return [value, name];
                   }}
-                  labelFormatter={(value: any) => subtypeTickFormatter(value)}
                 />
                 <Legend />
                 <Scatter name="All Products" data={priceBySubtype} fill="hsl(var(--accent))" />
@@ -166,21 +162,19 @@ const PriceAnalysis = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="typeValue" 
+                  type="category"
+                  dataKey="typeName" 
                   name="Type" 
                   className="text-sm"
-                  tickFormatter={typeTickFormatter}
-                  domain={[0, 1]}
-                  ticks={[0, 1]}
+                  allowDuplicatedCategory={false}
                 />
-                <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
+                <YAxis type="number" dataKey="price" name="Price (LKR)" className="text-sm" />
                 <Tooltip 
                   cursor={{ strokeDasharray: '3 3' }}
                   formatter={(value: any, name: string) => {
                     if (name === "Price (LKR)") return [`LKR ${value}`, name];
                     return [value, name];
                   }}
-                  labelFormatter={(value: any) => typeTickFormatter(value)}
                 />
                 <Legend />
                 <Scatter name="FashionBug" data={fashionbugTypeData} fill="hsl(var(--primary))" />
@@ -196,24 +190,22 @@ const PriceAnalysis = () => {
               <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis 
-                  dataKey="subtypeValue" 
+                  type="category"
+                  dataKey="subtypeName" 
                   name="Subtype" 
                   className="text-sm"
-                  tickFormatter={subtypeTickFormatter}
-                  domain={[0, 6]}
-                  ticks={[0, 1, 2, 3, 4, 5, 6]}
                   angle={-45}
                   textAnchor="end"
                   height={60}
+                  allowDuplicatedCategory={false}
                 />
-                <YAxis dataKey="price" name="Price (LKR)" className="text-sm" />
+                <YAxis type="number" dataKey="price" name="Price (LKR)" className="text-sm" />
                 <Tooltip 
                   cursor={{ strokeDasharray: '3 3' }}
                   formatter={(value: any, name: string) => {
                     if (name === "Price (LKR)") return [`LKR ${value}`, name];
                     return [value, name];
                   }}
-                  labelFormatter={(value: any) => subtypeTickFormatter(value)}
                 />
                 <Legend />
                 <Scatter name="FashionBug" data={fashionbugSubtypeData} fill="hsl(var(--primary))" />
